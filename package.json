@@ -21,6 +21,7 @@
   "homepage": "https://github.com/libeja/stocks#readme",
   "dependencies": {
     "axios": "^0.16.1",
+    "body-parser": "^1.17.1",
     "dotenv": "^4.0.0",
     "express": "^4.15.2",
     "highcharts": "^5.0.11",

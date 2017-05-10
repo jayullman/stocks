@@ -19,7 +19,7 @@ class Chart extends Component {
 
   render() {
     return (
-      <div ref={container => { this.container = container; }}>
+      <div ref={(container) => { this.container = container; }}>
 
       </div>
     );
