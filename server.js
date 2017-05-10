@@ -1,7 +1,12 @@
 const express = require('express');
+const app = express();
+const http = require('http').Server(app);
+
+// imports socket.io for server
+const io = require('socket.io')(http);
+
 const path = require('path');
 const mongoose = require('mongoose');
-
 
 
 const port = process.env.PORT || 3000;
@@ -20,9 +25,21 @@ db.on('open', () => {
   console.log('Connected to databse');
 });
 
-const app = express();
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.listen(port, () => {
+io.on('connection', (socket) => {
+  console.log('a user connected');
+  socket.on('disconnect', () => {
+    console.log('user disconnected');
+  });
+  socket.on('button', (msg) => {
+    console.log('button pressed!');
+    io.emit('message', 'this is from the server');
+  });
+});
+
+
+
+http.listen(port, () => {
   console.log('App is listening on port: ', port);
 });

@@ -25,7 +25,9 @@
     "express": "^4.15.2",
     "mongoose": "^4.9.5",
     "react": "^15.5.4",
-    "react-dom": "^15.5.4"
+    "react-dom": "^15.5.4",
+    "socket.io": "^2.0.1",
+    "socket.io-client": "^2.0.1"
   },
   "devDependencies": {
     "babel-core": "^6.24.1",
