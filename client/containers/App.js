@@ -9,32 +9,50 @@ const io = require('socket.io-client');
 
 const socket = io();
 
-socket.on('stocks', (stocks) => {
-  console.log('Stock List: ', stocks);
-});
-
 class App extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
       // keeps a list of stocks, populated from server
-      stocks: []
+      stocks: [],
+      stockData: []
     };
   }
 
   componentDidMount() {
+    socket.on('stocks', (stockData) => {
+      console.log('Stock List: ', stockData);
+      this.setState({
+        stockData
+      });
+    });
+
+    // if client receives socket error message
+    socket.on('error', (error) => {
+      console.log('error from server: ', error);
+    });
+
     // retrieve list of stocks from database
-    axios('/getStockList')
+    axios('/getStockData')
       .then(({ data }) => {
         console.log(data.stocks);
+        this.setState({
+          stocks: data.stocks
+        });
+
+        // once client receives updated stock list from server,
+        // client will retrieve stock data
+        // retrieveStockData
       });
   }
 
   render() {
     return (
       <div>
-        <Chart />
+        <Chart
+          stockData={this.state.stockData}
+        />
         <SearchStock
           socket={socket}
         />

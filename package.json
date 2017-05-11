@@ -22,6 +22,7 @@
   "dependencies": {
     "axios": "^0.16.1",
     "body-parser": "^1.17.1",
+    "check-ticker-symbol": "^1.0.0",
     "dotenv": "^4.0.0",
     "express": "^4.15.2",
     "highcharts": "^5.0.11",
@@ -29,7 +30,8 @@
     "react": "^15.5.4",
     "react-dom": "^15.5.4",
     "socket.io": "^2.0.1",
-    "socket.io-client": "^2.0.1"
+    "socket.io-client": "^2.0.1",
+    "yahoo-finance": "^0.2.16"
   },
   "devDependencies": {
     "babel-core": "^6.24.1",

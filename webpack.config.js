@@ -24,5 +24,5 @@ module.exports = {
     contentBase: __dirname + '/public'
   },
   devtool: 'eval-source-map',
-  watch: true
+  watch: true,
 }

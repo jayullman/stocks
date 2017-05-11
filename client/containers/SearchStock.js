@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import axios from 'axios';
+import checkSymbol from 'check-ticker-symbol';
 
 class SearchStock extends Component {
   constructor(props) {
@@ -22,18 +23,21 @@ class SearchStock extends Component {
     });
   }
 
+  // validates whether the symbol user entered is valid
   validateSymbol(symbol) {
-    return true;
+    return checkSymbol.valid(symbol);
   }
 
   handleAdd(event) {
     event.preventDefault();
+    const symbol = this.state.searchField;
+
     // validate stock symobol
-    console.log(this.state.searchField);
-    // socket.emit('button', this.state.searchField);
-    axios.post('/addStock', {
-      symbol: this.state.searchField
-    });
+    if (this.validateSymbol(symbol)) {
+      axios.post('/addStock', {
+        symbol
+      });
+    }
   }
 
   render() {
