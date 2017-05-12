@@ -24,7 +24,8 @@
     "arrow-parens": 1,
     "camelcase": 0,
     "no-plusplus": 0,
-    "arrow-body-style": 1
+    "arrow-body-style": 1,
+    "no-var": 1
   },
   "plugins": [
     "react"
