@@ -2,7 +2,7 @@ const express = require('express');
 const app = express();
 const http = require('http').Server(app);
 
-const lookupSymbols = require('./helpers/lookupSymbols');
+const parseStockData = require('./helpers/parseStockData');
 const validateSymbol = require('./helpers/validateSymbol');
 
 // import and use body-parser middleware
@@ -44,8 +44,9 @@ io.on('connection', (socket) => {
 const StockList = require('./models/stockList');
 
 app.post('/addStock', (req, res) => {
+  res.status(200);
+  res.json({ message: 'Awaiting io.emit' });  
   const symbol = req.body.symbol;
-
   // perform symbol lookup to see if any data is returned, otherwise ignore
   validateSymbol(symbol).then((result) => {
     // if symbol is valid
@@ -75,52 +76,57 @@ app.post('/addStock', (req, res) => {
             // save list to database, then perform lookup on all stocks in list,
             // then emit to all sockets
             list.save((err, updatedList) => {
-              console.log('updatedList: ', updatedList);
-              lookupSymbols(updatedList.stocks)
-                .then((results) => {
-                  // console.log('results: ', results);
-                  /* Parse results which will be the series object for the chart
-                   * resuling format:
-                   * [{
-                   *    name: nflx,
-                   *    data: [
-                   *      1222344, // UNIX time   
-                   *      34       // stock value
-                   *    ]        
-                   * }]
-                   */
+              // console.log('updatedList: ', updatedList);
+              // lookupSymbols(updatedList.stocks)
+              //   .then((results) => {
+              //     // console.log('results: ', results);
+              //     /* Parse results which will be the series object for the chart
+              //      * resuling format:
+              //      * [{
+              //      *    name: nflx,
+              //      *    data: [
+              //      *      1222344, // UNIX time   
+              //      *      34       // stock value
+              //      *    ]        
+              //      * }]
+              //      */
                    
-                  const stockData = Object.keys(results);
+              //     const stockData = Object.keys(results);
                   
-                  const seriesData = stockData.map((key) => {
-                    const mappedData = results[key].map((item) => {
-                      return [
-                        // convert string to unix time
-                        new Date(item.date).getTime() / 1000,
-                        item.close
-                      ];
-                    });
-                    return {
-                      name: key,
-                      data: mappedData
-                    }
-                  });
-                  console.log(seriesData);
-                  io.emit('stocks', seriesData);
-                });
+              //     const seriesData = stockData.map((key) => {
+              //       const mappedData = results[key].map((item) => {
+              //         return [
+              //           // convert string to unix time
+              //           new Date(item.date).getTime() / 1000,
+              //           item.close
+              //         ];
+              //       });
+              //       return {
+              //         name: key,
+              //         data: mappedData
+              //       }
+              //     });
+              //     console.log(seriesData);
+              //     io.emit('stocks', seriesData);
+              //   });
+              parseStockData(updatedList).then((results) => {
+                io.emit('stocks', results);
+              });
             });
           }
         }
       });
     // symbol is not valid, emit error to client
   } else {
-      console.log('symbol is not valid');    
+      console.log('symbol is not valid');
+      res.json({ error: 'Symbol is not valid' });
       io.emit('error', 'Stock is not valid');
     }
   });
   
 });
 
+// no longer used
 app.get('/getStockList', (req, res) => {
   StockList.findOne({}).then((results) => {
     res.json({
@@ -129,8 +135,17 @@ app.get('/getStockList', (req, res) => {
   });
 });
 
+// requests stock data in json format
 app.get('/getStockData', (req, res) => {
-
+  StockList.findOne({}, (err, list) => {
+    if (list) {
+      parseStockData(list).then((results) => {
+        res.json({ stockData: results });
+      });
+    } else {
+      res.json({ stockData: [] });      
+    }
+  });
 });
 
 http.listen(port, () => {

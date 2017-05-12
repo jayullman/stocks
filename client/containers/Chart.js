@@ -1,18 +1,23 @@
 import React, { Component } from 'react';
-import axios from 'axios';
 
 const Highcharts = require('highcharts/highstock');
 // require('highcharts/modules/exporting')(Highcharts);
 
+let chart;
+
 function createChart(seriesData) {
-  Highcharts.stockChart(this.container, {
-    series: seriesData
+  let data = seriesData;
+  // ensures chart is drawn even when there are no stocks selected
+  if (seriesData.length === 0) {
+    data = [{ name: '', data: [0] }];
+  }
+  chart = Highcharts.stockChart(this.container, {
+    series: data
   });
 }  
 
 class Chart extends Component {
   componentDidMount() {
-    console.log(this.props.stockData);
     createChart.call(this, this.props.stockData);
     
     // if (stocks.length > 0) {
@@ -23,11 +28,10 @@ class Chart extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    console.log('nextProps: ', nextProps);
     if (nextProps.stockData.length > 0) {
-      console.log('this should update');
       // this.forceUpdate();
       createChart.call(this, nextProps.stockData);
+      // chart.series.setData(nextProps.stockData);
     }
   }
 
