@@ -76,39 +76,6 @@ app.post('/addStock', (req, res) => {
             // save list to database, then perform lookup on all stocks in list,
             // then emit to all sockets
             list.save((err, updatedList) => {
-              // console.log('updatedList: ', updatedList);
-              // lookupSymbols(updatedList.stocks)
-              //   .then((results) => {
-              //     // console.log('results: ', results);
-              //     /* Parse results which will be the series object for the chart
-              //      * resuling format:
-              //      * [{
-              //      *    name: nflx,
-              //      *    data: [
-              //      *      1222344, // UNIX time   
-              //      *      34       // stock value
-              //      *    ]        
-              //      * }]
-              //      */
-                   
-              //     const stockData = Object.keys(results);
-                  
-              //     const seriesData = stockData.map((key) => {
-              //       const mappedData = results[key].map((item) => {
-              //         return [
-              //           // convert string to unix time
-              //           new Date(item.date).getTime() / 1000,
-              //           item.close
-              //         ];
-              //       });
-              //       return {
-              //         name: key,
-              //         data: mappedData
-              //       }
-              //     });
-              //     console.log(seriesData);
-              //     io.emit('stocks', seriesData);
-              //   });
               parseStockData(updatedList).then((results) => {
                 io.emit('stocks', results);
               });
@@ -126,15 +93,6 @@ app.post('/addStock', (req, res) => {
   
 });
 
-// no longer used
-app.get('/getStockList', (req, res) => {
-  StockList.findOne({}).then((results) => {
-    res.json({
-      stocks: results.stocks
-    })
-  });
-});
-
 // requests stock data in json format
 app.get('/getStockData', (req, res) => {
   StockList.findOne({}, (err, list) => {
@@ -144,6 +102,27 @@ app.get('/getStockData', (req, res) => {
       });
     } else {
       res.json({ stockData: [] });      
+    }
+  });
+});
+
+app.delete('/removeStock/:stockName', (req, res) => {
+  res.json({ message: 'Awaiting io.emit' });    
+  const stockName = req.params.stockName;
+  StockList.findOne({}, (err, list) => {
+    if (list) {
+      const stocks = [...list.stocks];  
+      const index = stocks.indexOf(stockName);
+      stocks.splice(index, 1);
+      console.log(stocks);
+      list.stocks = stocks;
+      console.log(list);
+      list.save((err, updatedList) => {
+        console.log(updatedList);
+        parseStockData(updatedList).then((results) => {
+          io.emit('stocks', results);
+        });
+      });
     }
   });
 });

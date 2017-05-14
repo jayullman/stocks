@@ -5,9 +5,15 @@ import React from 'react';
 
 const StocksContainer = (props) => {
   const stocks = props.stocks.map(stock =>
-    <div key={stock}>
+    <div className='stock-tile' key={stock}>
       {stock}
-      <i className="fa fa-times-circle" aria-hidden="true"></i>
+      <i
+        // removes stock and passes stock name to function
+        onClick={props.removeStock.bind(this, stock)} 
+        className="fa fa-times-circle" 
+        aria-hidden="true"
+      >
+      </i>
     </div>
   );
 

@@ -15,12 +15,11 @@ module.exports = function parseStockData(stockList) {
   return lookupSymbols(stockList.stocks)
     .then((results) => {
       const stockData = Object.keys(results);
-
       const seriesData = stockData.map((key) => {
         const mappedData = results[key].map((item) => {
           return [
             // convert string to unix time
-            new Date(item.date).getTime() / 1000,
+            new Date(item.date).getTime(),
             item.close
           ];
         });
@@ -32,4 +31,3 @@ module.exports = function parseStockData(stockList) {
     return seriesData;
     });
 }
-

@@ -20,13 +20,16 @@ class App extends Component {
       stocks: [],
       stockData: []
     };
+
+    this.removeStock = this.removeStock.bind(this);
   }
 
   componentDidMount() {
     socket.on('stocks', (stockData) => {
       console.log('Stock List: ', stockData);
       this.setState({
-        stockData
+        stockData,
+        stocks: extractStockNames(stockData)
       });
     });
 
@@ -43,11 +46,18 @@ class App extends Component {
           stockData: data.stockData,
           stocks: extractStockNames(data.stockData)
         });
-
-        // once client receives updated stock list from server,
-        // client will retrieve stock data
-        // retrieveStockData
       });
+  }
+
+  // removes a stock when user clicks on the 'x'
+  removeStock(stock) {
+    console.log(stock);
+    const url = `/removeStock/${stock}`;
+    axios.delete(url)
+      .then(({ data }) => {
+        console.log(data);
+    });
+    // 
   }
 
   render() {
@@ -61,6 +71,7 @@ class App extends Component {
         />
         <StocksContainer
           stocks={this.state.stocks}
+          removeStock={this.removeStock}
         />
       </div>
     );
