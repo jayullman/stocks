@@ -50,7 +50,6 @@ app.post('/addStock', (req, res) => {
     // if symbol is valid
     if (result) {
       res.json({ message: 'Awaiting io.emit' });        
-      console.log('symbol is valid');
       StockList.findOne({}, (err, list) => {
         if (err) throw err;
 
@@ -82,7 +81,6 @@ app.post('/addStock', (req, res) => {
       });
     // symbol is not valid, emit error to client
   } else {
-      console.log('symbol is not valid');
       res.json({ error: 'No information found for entered symbol' });
     }
   });
@@ -114,14 +112,15 @@ app.delete('/removeStock/:stockName', (req, res) => {
       const stocks = [...list.stocks];  
       const index = stocks.indexOf(stockName);
       stocks.splice(index, 1);
-      console.log(stocks);
       list.stocks = stocks;
-      console.log(list);
       list.save((err, updatedList) => {
-        console.log(updatedList);
-        parseStockData(updatedList).then((results) => {
-          io.emit('stocks', results);
-        });
+        if (updatedList.stocks.length > 0) {
+          parseStockData(updatedList).then((results) => {
+            io.emit('stocks', results);
+          });
+        } else {
+          io.emit('stocks', []);
+        }
       });
     }
   });

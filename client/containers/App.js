@@ -32,7 +32,6 @@ class App extends Component {
 
   componentDidMount() {
     socket.on('stocks', (stockData) => {
-      console.log('Stock List: ', stockData);
       this.setState({
         stockData,
         stocks: extractStockNames(stockData)
@@ -57,7 +56,6 @@ class App extends Component {
 
   // removes a stock when user clicks on the 'x'
   removeStock(stock) {
-    console.log(stock);
     const url = `/removeStock/${stock}`;
     axios.delete(url)
       .then(({ data }) => {

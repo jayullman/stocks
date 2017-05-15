@@ -30,6 +30,11 @@ form button {
 .no-touchevents form button:hover {
   background: #fff;
   color: #1af0f4;
+}
+
+.intro p {
+  width: 80%;
+  margin: 0 auto 20px auto;
 }.stocks-container {
   display: flex;
   flex-wrap: wrap;
@@ -77,6 +82,7 @@ header h1 {
     font-size: 1.6em;
   }
 }footer {
+  margin-top: 20px;
   height: 150px;
   background: #004589;
   color: #fff;

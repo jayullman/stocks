@@ -31,3 +31,8 @@ form button {
   background: #fff;
   color: #1af0f4;
 }
+
+.intro p {
+  width: 80%;
+  margin: 0 auto 20px auto;
+}

@@ -62,7 +62,14 @@ class SearchStock extends Component {
     return (
       <div>
         <form>
-          <div className='intro' />
+          <div className='intro'>
+            <p>
+              This app uses socket.io to maintain continuous communication with the server. A change 
+              from one user will be reflected instantly across all users. Use the form below to add
+              a stock to track. Click on the <i className="fa fa-times-circle" aria-hidden="true" /> to 
+              remove a stock.
+            </p>
+          </div>
           <input 
             onChange={this.handleSearchFieldChange}
             type='text'
