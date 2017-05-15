@@ -12,9 +12,14 @@ function createChart(seriesData) {
     data = [{ name: '', data: [0] }];
   }
   chart = Highcharts.stockChart(this.container, {
+    yAxis: {
+      title: {
+        text: 'Closing Price'
+      }
+    },
     tooltip: {
       xDateFormat: '%B %d, %Y',
-      pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b>',
+      pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>${point.y}</b>',
       valueDecimals: 2,
       split: true
     },
