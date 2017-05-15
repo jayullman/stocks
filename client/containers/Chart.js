@@ -7,7 +7,6 @@ let chart;
 
 function createChart(seriesData) {
   let data = seriesData;
-  console.log(data);
   // ensures chart is drawn even when there are no stocks selected
   if (seriesData.length === 0) {
     data = [{ name: '', data: [0] }];

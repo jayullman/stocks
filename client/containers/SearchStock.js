@@ -20,6 +20,10 @@ class SearchStock extends Component {
   }
 
   handleSearchFieldChange(event) {
+    if (this.state.messageText) {
+      this.setState({ messageText: '' });
+    }
+
     const value = event.target.value;
     this.setState({
       searchField: value
@@ -34,7 +38,6 @@ class SearchStock extends Component {
   handleAdd(event) {
     event.preventDefault();
     const symbol = this.state.searchField;
-
     // validate stock symobol
     if (this.validateSymbol(symbol)) {
       axios.post('/addStock', {
@@ -47,7 +50,8 @@ class SearchStock extends Component {
             });
           } else {
             this.setState({
-              messageText: ''
+              messageText: '',
+              searchField: ''
             });
           }
         });
@@ -72,6 +76,7 @@ class SearchStock extends Component {
           </div>
           <input 
             onChange={this.handleSearchFieldChange}
+            value={this.state.searchField}
             type='text'
             placeholder='Symbol' 
           />
