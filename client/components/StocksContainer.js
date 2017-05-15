@@ -3,14 +3,16 @@
  */
 import React from 'react';
 
+import '../styles/stocksContainer.css';
+
 const StocksContainer = (props) => {
   const stocks = props.stocks.map(stock =>
     <div className='stock-tile' key={stock}>
-      {stock}
+      {stock.toUpperCase()}
       <i
         // removes stock and passes stock name to function
         onClick={props.removeStock.bind(this, stock)} 
-        className="fa fa-times-circle" 
+        className="delete-icon fa fa-times-circle fa-1x" 
         aria-hidden="true"
       >
       </i>

@@ -1,0 +1,26 @@
+.stocks-container {
+  display: flex;
+  flex-wrap: wrap;
+  /*justify-content: space-around;*/
+  align-content: space-around;
+  width: 80%;
+  min-width: 280px;
+  margin: 0 auto;
+}
+
+.stock-tile {
+  color: #555;
+  width: 80px;
+  height: 40px;
+  line-height: 40px;
+  border: 1px solid #555;
+  text-align: center;
+  margin-right: 10px;
+  margin-bottom: 10px;
+  box-shadow: -1px 1px 3px #777;
+}
+
+.delete-icon {
+  margin-left: 10px;
+  cursor: pointer;
+}

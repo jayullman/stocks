@@ -44,13 +44,12 @@ io.on('connection', (socket) => {
 const StockList = require('./models/stockList');
 
 app.post('/addStock', (req, res) => {
-  res.status(200);
-  res.json({ message: 'Awaiting io.emit' });  
   const symbol = req.body.symbol;
   // perform symbol lookup to see if any data is returned, otherwise ignore
   validateSymbol(symbol).then((result) => {
     // if symbol is valid
     if (result) {
+      res.json({ message: 'Awaiting io.emit' });        
       console.log('symbol is valid');
       StockList.findOne({}, (err, list) => {
         if (err) throw err;
@@ -61,10 +60,8 @@ app.post('/addStock', (req, res) => {
             stocks: [symbol]
           });
           newStockList.save().then(() => {
-            console.log('saved to database');
           });
         } else {
-          console.log('list exists');
           const stocksList = [...list.stocks];
 
           // check if stock is unique to list
@@ -86,8 +83,7 @@ app.post('/addStock', (req, res) => {
     // symbol is not valid, emit error to client
   } else {
       console.log('symbol is not valid');
-      res.json({ error: 'Symbol is not valid' });
-      io.emit('error', 'Stock is not valid');
+      res.json({ error: 'No information found for entered symbol' });
     }
   });
   
@@ -97,9 +93,13 @@ app.post('/addStock', (req, res) => {
 app.get('/getStockData', (req, res) => {
   StockList.findOne({}, (err, list) => {
     if (list) {
-      parseStockData(list).then((results) => {
-        res.json({ stockData: results });
-      });
+      if (list.stocks.length === 0) {
+        res.json({ stockData: [] });    
+      } else {
+        parseStockData(list).then((results) => {
+          res.json({ stockData: results });
+        });
+      }
     } else {
       res.json({ stockData: [] });      
     }

@@ -28,6 +28,9 @@ module.exports = function parseStockData(stockList) {
           data: mappedData
         }
       });
-    return seriesData;
+      return seriesData;
+    })
+    .catch((err) => {
+      console.log(err);
     });
 }

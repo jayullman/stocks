@@ -3,12 +3,15 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import checkSymbol from 'check-ticker-symbol';
 
+import '../styles/searchStock.css';
+
 class SearchStock extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      searchField: ''
+      searchField: '',
+      messageText: ''
     };
 
     this.handleAdd = this.handleAdd.bind(this);
@@ -36,6 +39,21 @@ class SearchStock extends Component {
     if (this.validateSymbol(symbol)) {
       axios.post('/addStock', {
         symbol
+      })
+        .then(({ data }) => {
+          if (data.error) {
+            this.setState({
+              messageText: data.error
+            });
+          } else {
+            this.setState({
+              messageText: ''
+            });
+          }
+        });
+    } else {
+      this.setState({
+        messageText: 'The stock symbol you entered was not valid'
       });
     }
   }
@@ -44,9 +62,11 @@ class SearchStock extends Component {
     return (
       <div>
         <form>
+          <div className='intro' />
           <input 
             onChange={this.handleSearchFieldChange}
-            type='text' 
+            type='text'
+            placeholder='Symbol' 
           />
           <button 
             onClick={this.handleAdd}
@@ -54,6 +74,11 @@ class SearchStock extends Component {
             Add Stock
           </button>
         </form>
+        <div
+          className='message-area'
+        >
+          {this.state.messageText}
+        </div>
       </div>
     );
   }

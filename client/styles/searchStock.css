@@ -1,0 +1,33 @@
+form {
+  margin-top: 10px;
+}
+
+form input {
+  height: 25px;
+  font-size: 1em;
+  width: 60px;
+}
+
+form button {
+  background: #1af0f4;
+  height: 33px;
+  color: #fff;
+  border: 0;
+  outline: 0;
+  font-size: .8em;
+  padding: 5px;
+  cursor: pointer;
+  margin-left: 5px;
+  box-shadow: -1px 1px 3px #777;
+}
+
+.message-area {
+  margin-top: 10px;
+  height: 30px;
+  color: #DC0000;
+}
+
+.no-touchevents form button:hover {
+  background: #fff;
+  color: #1af0f4;
+}

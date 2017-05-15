@@ -13,6 +13,11 @@ function createChart(seriesData) {
     data = [{ name: '', data: [0] }];
   }
   chart = Highcharts.stockChart(this.container, {
+    tooltip: {
+      pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b> ({point.change}%)<br/>',
+      valueDecimals: 2,
+      split: true
+    },
     series: data
   });
 }  
@@ -20,12 +25,6 @@ function createChart(seriesData) {
 class Chart extends Component {
   componentDidMount() {
     createChart.call(this, this.props.stockData);
-    
-    // if (stocks.length > 0) {
-    //   lookupSymbols(stocks)
-    //     .then(() => {
-    //     });
-    // }
   }
 
   componentWillReceiveProps(nextProps) {
@@ -39,7 +38,6 @@ class Chart extends Component {
   render() {
     return (
       <div ref={(container) => { this.container = container; }}>
-      {this.props.stockData.length > 0 && <p>hello!</p>}
       </div>
     );
   }

@@ -1,4 +1,5 @@
 var path = require('path');
+var ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
   entry: './client/index.js',
@@ -17,7 +18,10 @@ module.exports = {
             loader: 'eslint-loader',
           }
         ]
-      }
+      }, {
+        test: /\.css$/,
+        use: ExtractTextPlugin.extract('css-loader')
+      }      
     ]
   },
   devServer: {
@@ -25,4 +29,7 @@ module.exports = {
   },
   devtool: 'eval-source-map',
   watch: true,
+  plugins: [
+    new ExtractTextPlugin('styles.css')
+  ]
 }
