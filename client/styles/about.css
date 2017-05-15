@@ -1,0 +1,27 @@
+.about-section {
+  margin: 20px auto 0 auto;
+  padding: 10px;
+  text-align: center;
+  background-color: #d7d7d7;
+}
+
+.about-section p {
+  text-align: left;
+  max-width: 700px;
+  margin: 0 auto 10px auto;
+  padding: 10px 20px;
+}
+
+.list-container {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.user-story-list {
+  margin: 0 auto;
+}
+
+li {
+  text-align: left;
+  margin-bottom: 5px;
+}

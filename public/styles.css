@@ -61,10 +61,36 @@ form button {
   margin-left: 10px;
   cursor: pointer;
 }
-header {
+.about-section {
+  margin: 20px auto 0 auto;
+  padding: 10px;
+  text-align: center;
+  background-color: #d7d7d7;
+}
+
+.about-section p {
+  text-align: left;
+  max-width: 700px;
+  margin: 0 auto 10px auto;
+  padding: 10px 20px;
+}
+
+.list-container {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.user-story-list {
+  margin: 0 auto;
+}
+
+li {
+  text-align: left;
+  margin-bottom: 5px;
+}header {
   background: #004589;
   color: #fff;
-  height: 120px;
+  height: 100px;
   text-align: center;
   position: relative;
 }
@@ -72,7 +98,7 @@ header {
 header h1 {
   padding: 0;
   margin: 0;
-  line-height: 120px;
+  line-height: 100px;
   font-weight: 400;
 
 }
@@ -82,24 +108,12 @@ header h1 {
     font-size: 1.6em;
   }
 }footer {
-  margin-top: 20px;
   height: 150px;
   background: #004589;
   color: #fff;
   text-align: center;
   padding-top: 20px;
   padding-bottom: 20px;
-}
-
-a {
-  color: #fff;
-  text-decoration: none;
-  border-bottom: 1px solid #fff;
-	transition: all .2s ease-in;    
-}
-
-.no-touchevents footer a:hover {
-  color: #30b9db;
 }
 
 .icons-container a {
@@ -127,4 +141,17 @@ body {
   font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: 300;
   text-align: center;
+  min-width: 280px;
+}
+
+a {
+  color: #fff;
+  text-decoration: none;
+  border-bottom: 1px solid #fff;
+	transition: all .2s ease-in;    
+}
+
+.no-touchevents a:hover {
+  color: #30b9db;
+  border-bottom: 1px solid #30b9db;  
 }

@@ -4,6 +4,7 @@ import axios from 'axios';
 import Chart from './Chart';
 import SearchStock from './SearchStock';
 import StocksContainer from '../components/StocksContainer';
+import About from '../components/About';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 
@@ -77,6 +78,7 @@ class App extends Component {
           stocks={this.state.stocks}
           removeStock={this.removeStock}
         />
+        <About />
         <Footer />
       </div>
     );
