@@ -6,6 +6,7 @@ const Highcharts = require('highcharts/highstock');
 let chart;
 
 function createChart(seriesData) {
+  console.log('chart called');
   let data = seriesData;
   // ensures chart is drawn even when there are no stocks selected
   if (seriesData.length === 0) {
@@ -19,7 +20,7 @@ function createChart(seriesData) {
     },
     tooltip: {
       xDateFormat: '%B %d, %Y',
-      pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>${point.y}</b>',
+      pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b>',
       valueDecimals: 2,
       split: true
     },
