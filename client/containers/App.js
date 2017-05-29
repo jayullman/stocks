@@ -47,7 +47,6 @@ class App extends Component {
     // retrieve list of stocks from database
     axios('/getStockData')
       .then(({ data }) => {
-        // console.log(data.stockData);
         this.setState({
           stockData: data.stockData,
           stocks: extractStockNames(data.stockData),

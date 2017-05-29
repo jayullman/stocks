@@ -6,7 +6,6 @@ const Highcharts = require('highcharts/highstock');
 let chart;
 
 function createChart(seriesData) {
-  console.log('chart called');
   let data = seriesData;
   // ensures chart is drawn even when there are no stocks selected
   if (seriesData.length === 0) {

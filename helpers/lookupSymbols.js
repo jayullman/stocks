@@ -1,4 +1,4 @@
-const yahooFinance = require('yahoo-finance');
+const googleFinance = require('google-finance');
 
 // this function will create a date range from today to one year ago as a string
 // returns an array ['date-one-year-ago', 'todays-date']
@@ -30,8 +30,10 @@ function createDateRange() {
 
 // module returns promise of stock results
 module.exports = function lookupSymbols(symbols) {
+  // prepend 'NASDAQ: before each symbol'
+  const prependedSymbols = symbols.map(symbol => `NASDAQ:${symbol}`);
   const range = createDateRange();
-  return yahooFinance.historical({
+  return googleFinance.historical({
     symbols: symbols,
     from: range[0],
     to: range[1],
